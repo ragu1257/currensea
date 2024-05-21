@@ -95,8 +95,8 @@ export default function PriceGraph() {
   }, [Amount, From, To, convertedValue]);
 
   return (
-    <div>
-      PriceGraph Original {From} {To} is {convertedValue}
+    <div className="text-light-1">
+      {Amount} {From}  is {convertedValue} {To}
     </div>
   );
 }

@@ -3,8 +3,8 @@
 export default function SelectCurrency() {
   
   return (
-    <div>
-      <h1>Dashboard</h1>
-    </div>
+
+      <h1 className="text-light-1">Dashboard</h1>
+
   );
 }

@@ -106,16 +106,20 @@ let dataTest = currencies
   }, [Amount, From, To, convertedValue]);
 
   return (
-    <div>
+    <div className="text-light-1">
       Price All {From}  in 
-      {convertedValue &&
-        convertedValue.map((currency) => {
-          return (
-            <div key={currency.currency}>
-              {currency.currency} {currency.data}
+   
+      {convertedValue?.map((currency: any) => {
+        return (
+          <span key={currency.currency}>
+            <div>
+              {Amount} {From} = {currency.data} {currency.currency} 
             </div>
-          );
-        })}
+  
+          </span>
+        );
+      })}
+     
     </div>
   );
 }
