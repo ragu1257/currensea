@@ -1,0 +1,17 @@
+.dashboard-current-price{
+  &__image-container{
+    position: relative;
+    padding-right: 25px;
+    
+    &__image2{
+      position: absolute;
+      left: 17px;
+      top: 17px;
+      margin: 0px;
+      /* border: 1px solid red; */
+      border-radius: 50%;
+      background: black;
+    }
+  }
+
+}

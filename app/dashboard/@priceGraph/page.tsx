@@ -9,6 +9,8 @@ import {
   YAxis,
   Tooltip
 } from "recharts";
+import { Button } from "@/components/ui/button"
+import "./style.scss";
 
 interface CurrencyData {
   date: string;
@@ -20,7 +22,7 @@ export default function PriceGraph() {
   const From = searchParams.get("From");
   const To = searchParams.get("To");
   const [convertedValue, setConvertedValue] = useState<CurrencyData[]>([]);
-
+  const [yearData, setYearData] = useState<number>(12);
   // Function to add one month to the current date
   function addMonth(date) {
     let newDate = new Date(date);
@@ -31,7 +33,7 @@ export default function PriceGraph() {
   // Function to format date as YYYY-MM-DD
   function formatDate(date) {
     let year = date.getFullYear();
-    let month = new Intl.DateTimeFormat("en-US", { month: "long" }).format(
+    let month = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
       date
     );
     return `${month} ${year}`;
@@ -125,13 +127,14 @@ export default function PriceGraph() {
     fetchCurrencyData();
   }, [From, To]);
 
+
   return (
-    <div className="text-light-1"> 
-     <p> {From} to {To} </p>  
+    <div className="price-graph text-center"> 
+     <p className="text-light-1"> {From} to {To} </p>  
       <LineChart
         width={500}
         height={250}
-        data={convertedValue ?? []}
+        data={convertedValue.slice(-yearData) ?? []}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
@@ -141,6 +144,15 @@ export default function PriceGraph() {
 
         <Line type="monotone" dataKey="value" stroke="#8884d8" />
       </LineChart>
+      <div className="pt-4 pl-16">
+      <Button className="h-6" variant="secondary" onClick={() => setYearData(12)} >1 year</Button>
+     <Button className="h-6" variant="secondary" onClick={() => setYearData(60)}>5 year</Button>
+     <Button className="h-6" variant="secondary" onClick={() => setYearData(120)}>10 year</Button>
+     <Button className="h-6"variant="secondary" onClick={() => setYearData(240)}>20 year</Button>
+     <Button className="h-6" variant="secondary" onClick={() => setYearData(0)}>All</Button>
+      </div>
+
+
     </div>
   );
 }
