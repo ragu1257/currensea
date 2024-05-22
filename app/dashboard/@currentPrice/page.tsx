@@ -104,7 +104,15 @@ export default function PriceGraph() {
     };
 
     fetchCurrencyData();
-    setCurrencyData(currencies.filter((currency) => currency.value === To || currency.value === From ));
+    setCurrencyData(
+      currencies.filter(
+        (currency) => currency.value === From || currency.value === To
+      ).sort((a, b) => {
+        if (a.value === From) return -1;
+        if (b.value === From) return 1;
+        return 0;
+      })
+    );
 
 
   }, [Amount, From, To, convertedValue]);
@@ -115,7 +123,7 @@ export default function PriceGraph() {
     
     return new Intl.NumberFormat("en", {
       minimumFractionDigits: 2,
-      maximumFractionDigits: 4
+      maximumFractionDigits: 2
   }).format(value);
   };
   
