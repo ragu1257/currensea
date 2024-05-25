@@ -7,8 +7,10 @@ import {
   CartesianGrid,
   XAxis,
   YAxis,
-  Tooltip
+  Tooltip,
+  ResponsiveContainer
 } from "recharts";
+import { currencies } from "@/constants/index";
 import { Button } from "@/components/ui/button"
 import "./style.scss";
 
@@ -21,6 +23,7 @@ export default function PriceGraph() {
   const searchParams = useSearchParams();
   const From = searchParams.get("From");
   const To = searchParams.get("To");
+  const Amount = searchParams.get("Amount");
   const [convertedValue, setConvertedValue] = useState<CurrencyData[]>([]);
   const [yearData, setYearData] = useState<number>(12);
   // Function to add one month to the current date
@@ -38,6 +41,8 @@ export default function PriceGraph() {
     );
     return `${month} ${year}`;
   }
+
+
 
   useEffect(() => {
     // Start date
@@ -127,10 +132,14 @@ export default function PriceGraph() {
     fetchCurrencyData();
   }, [From, To]);
 
+  if (!Amount || !From || !To || parseFloat(Amount) < 1 || !currencies.find(currency => currency.value === From) || !currencies.find(currency => currency.value === To)){
+    return null
+ }
 
   return (
     <div className="price-graph text-center"> 
      <p className="text-light-1"> {From} to {To} </p>  
+     <ResponsiveContainer width="85%" height={400} className="m-auto">
       <LineChart
         width={500}
         height={250}
@@ -144,6 +153,7 @@ export default function PriceGraph() {
 
         <Line type="monotone" dataKey="value" stroke="#8884d8" />
       </LineChart>
+      </ResponsiveContainer>
       <div className="pt-4 pl-16">
       <Button className="h-6" variant="secondary" onClick={() => setYearData(12)} >1 year</Button>
      <Button className="h-6" variant="secondary" onClick={() => setYearData(60)}>5 year</Button>

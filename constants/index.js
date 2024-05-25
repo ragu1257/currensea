@@ -2,7 +2,7 @@ export const currencies = [
   { value: 'USD', label: 'USD - US Dollar', imgURL: "/assets/us-icon.png", symbol: "$"},
   { value: 'EUR', label: 'EUR - Euro', imgURL: "/assets/euro-icon.png", symbol: "€"},
   { value: 'JPY', label: 'JPY - Japanese Yen', imgURL: "/assets/japan-icon.png", symbol: "¥"},
-  { value: 'GBP', label: 'GBP - British Pound', imgURL: "/assets/britian-icon.png", symbol: "£"},
+  { value: 'GBP', label: 'GBP - British Pound', imgURL: "/assets/britain-icon.png", symbol: "£"},
   { value: 'AUD', label: 'AUD - Australian Dollar', imgURL: "/assets/aus-icon.png", symbol: "$"},
   { value: 'CAD', label: 'CAD - Canadian Dollar', imgURL: "/assets/canada-icon.png", symbol: "$"},
   { value: 'CHF', label: 'CHF - Swiss Franc', imgURL: "/assets/swiss-icon.png", symbol: "Fr" },

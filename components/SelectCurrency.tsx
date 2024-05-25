@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -25,7 +25,18 @@ export default function SelectCurrency() {
   const router = useRouter()
   const [currencyDataFrom , setCurrencyDataFrom] = useState(null)
   const [currencyDataTo , setCurrencyDataTo] = useState(null)
-  const [amount , setAmout] = useState('')
+  const [amount , setAmout] = useState()
+  const [buttonDisable , setButtonDisable] = useState(true)
+
+useEffect(() => {
+  if(currencyDataFrom && currencyDataTo && (amount && amount >= 1)){
+    setButtonDisable(false)
+  } else {
+    setButtonDisable(true)
+  }
+}
+, [currencyDataFrom , currencyDataTo , amount])
+
 
   const currenciesDataFrom = 
   currencyDataTo ? currencies.filter(currency => currency.value !== currencyDataTo).map((currency) => {
@@ -91,14 +102,14 @@ export default function SelectCurrency() {
     <Card className="w-[350px]">
           <CardHeader>
             <CardTitle>Convert</CardTitle>
-            <CardDescription>Enter the curreny amount and select curry</CardDescription>
+            <CardDescription>Enter the curreny amount and select curreny</CardDescription>
           </CardHeader>
           <CardContent>
             <form>
               <div className="grid w-full items-center gap-4">
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="amount">Enter Amount</Label>
-                  <Input type="number" id="amount" value={amount} onChange={(e)=>setAmout(e.target.value)} placeholder="Enter Amount" />
+                  <Input type="number" min={1} id="amount" value={amount} onChange={(e)=>setAmout(e.target.value)} placeholder="Enter Amount" />
                 </div>
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="framework">From</Label>
@@ -126,7 +137,7 @@ export default function SelectCurrency() {
             </form>
           </CardContent>
           <CardFooter className="flex flex-col justify-center">
-            <Button onClick={callApis}>Search</Button>
+            <Button disabled={buttonDisable} onClick={callApis}>Search</Button>
           </CardFooter>
         </Card>
   )

@@ -12,15 +12,15 @@ export default function Layout({
   return (
     <div className="flex flex-col">
       {children}
-      <div className="flex w-full">
-        <div className="p-4">
+      <div className="flex w-full justify-center">
+        <div className="p-4 grow">
           {currentPrice}
         </div>
-        <div className="p-4">
+        <div className="p-4 grow">
           {priceGraph}
         </div>
       </div>
-      <div className="flex w-full p-4 justify-center">  
+      <div className=" p-4 flex justify-center">  
           {allCurrencies}
         </div>
 

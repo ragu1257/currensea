@@ -1,13 +1,18 @@
-.dashboard-current-price{
+.all-currencies-price{
+  display: flex;
+  flex-wrap: wrap;
+  width: 70%;
+
   &__image-container{
     position: relative;
     padding-right: 25px;
     
     &__image2{
       position: absolute;
-      left: 29px;
-      top: 25px;
+      left: 17px;
+      top: 17px;
       margin: 0px;
+      /* border: 1px solid red; */
       border-radius: 50%;
       background: black;
     }
