@@ -147,8 +147,8 @@ export default function PriceGraph() {
     <div className=" text-light-1 all-currencies-price">
       {convertedValue?.map((currency: any) => {
         return (
-          <span className="flex p-5 mr-8" key={currency.currency}>
-            <div className="flex all-currencies-price__image-container h-fit">
+          <span className="flex p-5 mr-8 max-md:flex-col" key={currency.currency}>
+            <div className="flex all-currencies-price__image-container h-fit max-md:pb-5">
               {cuurentCurrencyURL && (
                 <Image
                 className="all-currencies-price__image-container__image1" 

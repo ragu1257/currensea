@@ -22,7 +22,7 @@ export default function Layout({
       </div>
       <div className=" w-full justify-center lg:hidden">
         <div className="text-light-1 p-4 grow lg:col-span-full ">
-         rwrwwq {currentPrice} wrwrewer
+          {currentPrice} 
         </div>
         <div className="p-4 grow lg:col-span-full">
           {priceGraph}

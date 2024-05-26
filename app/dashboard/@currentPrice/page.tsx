@@ -120,8 +120,8 @@ export default function PriceGraph() {
   return (
     currencyData && (
       <>
-      <div className="flex text-light-1 dashboard-current-price">
-        <div className="flex dashboard-current-price__image-container h-min">
+      <div className="flex text-light-1 max-md:flex-col  dashboard-current-price">
+        <div className="flex dashboard-current-price__image-container h-min max-md:pb-5">
           <Image
             className="dashboard-current-price__image-container__image1"
             src={currencyData[0].imgURL}
@@ -176,7 +176,7 @@ export default function PriceGraph() {
             <Input
               id="name"
               type="number"
-              defaultValue="Pedro Duarte"
+              placeholder="Amount"
               className="col-span-3"
             />
           </div>
@@ -187,7 +187,7 @@ export default function PriceGraph() {
             <Input
               id="username"
               type="email"
-              defaultValue="@peduarte"
+              placeholder="Email"
               className="col-span-3"
             />
           </div>
