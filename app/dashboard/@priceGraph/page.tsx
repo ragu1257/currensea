@@ -27,14 +27,14 @@ export default function PriceGraph() {
   const [convertedValue, setConvertedValue] = useState<CurrencyData[]>([]);
   const [yearData, setYearData] = useState<number>(12);
   // Function to add one month to the current date
-  function addMonth(date) {
+  function addMonth(date: any) {
     let newDate = new Date(date);
     newDate.setMonth(newDate.getMonth() + 1);
     return newDate;
   }
 
   // Function to format date as YYYY-MM-DD
-  function formatDate(date) {
+  function formatDate(date: any) {
     let year = date.getFullYear();
     let month = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
       date
@@ -53,11 +53,11 @@ export default function PriceGraph() {
           `https://data-api.ecb.europa.eu/service/data/EXR/M.${To}.EUR.SP00.A?startPeriod=2000&detail=full&format=jsondata`
         );
         const data = await getDataFromDB.json();
-        const currencyData = Object.values(data.dataSets[0].series)[0]
-          .observations;
+        const currencyData = data.dataSets[0].series["0:0:0:0:0"].observations
+
 
         const currencyDataArray = Object.entries(currencyData).map(
-          ([key, value]) => {
+          ([ key,value]: any) => {
             return value[0];
           }
         );
@@ -67,17 +67,17 @@ export default function PriceGraph() {
           startDate = currentDate; // Update the start date to the new date
           return { date: formatDate(currentDate), value: value };
         });
+        
         setConvertedValue(formattedArray);
       } else if (To === "EUR") {
         const getDataFromDB = await fetch(
           `https://data-api.ecb.europa.eu/service/data/EXR/M.${From}.EUR.SP00.A?startPeriod=2000&detail=full&format=jsondata`
         );
         const data = await getDataFromDB.json();
-        const currencyData = Object.values(data.dataSets[0].series)[0]
-          .observations;
+        const currencyData = data.dataSets[0].series["0:0:0:0:0"].observations
 
         const currencyDataArray = Object.entries(currencyData).map(
-          ([key, value]) => {
+          ([key, value]: any) => {
             return value[0];
           }
         );
@@ -94,11 +94,10 @@ export default function PriceGraph() {
           `https://data-api.ecb.europa.eu/service/data/EXR/M.${From}.EUR.SP00.A?startPeriod=2000&detail=full&format=jsondata`
         );
         const dataFrom = await getDataFromDB.json();
-        const currencyDataFrom = Object.values(dataFrom.dataSets[0].series)[0]
-          .observations;
+        const currencyDataFrom = dataFrom.dataSets[0].series["0:0:0:0:0"].observations
 
         const currencyDataArrayFrom = Object.entries(currencyDataFrom).map(
-          ([key, value]) => {
+          ([key, value]: any) => {
             return value[0];
           }
         );
@@ -107,10 +106,9 @@ export default function PriceGraph() {
           `https://data-api.ecb.europa.eu/service/data/EXR/M.${To}.EUR.SP00.A?startPeriod=2000&detail=full&format=jsondata`
         );
         const dataTo = await getDataToDB.json();
-        const currencyDataTo = Object.values(dataTo.dataSets[0].series)[0]
-          .observations;
+        const currencyDataTo = dataTo.dataSets[0].series["0:0:0:0:0"].observations
         const currencyDataArrayTo = Object.entries(currencyDataTo).map(
-          ([key, value]) => {
+          ([key, value]: any) => {
             return value[0];
           }
         );

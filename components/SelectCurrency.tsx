@@ -23,9 +23,9 @@ import { useRouter } from "next/navigation";
 
 export default function SelectCurrency() {
   const router = useRouter()
-  const [currencyDataFrom , setCurrencyDataFrom] = useState(null)
-  const [currencyDataTo , setCurrencyDataTo] = useState(null)
-  const [amount , setAmout] = useState()
+  const [currencyDataFrom , setCurrencyDataFrom] = useState('')
+  const [currencyDataTo , setCurrencyDataTo] = useState('')
+  const [amount , setAmout] = useState<number>()
   const [buttonDisable , setButtonDisable] = useState(true)
 
 useEffect(() => {
@@ -78,17 +78,17 @@ useEffect(() => {
   }
   )
 
-  const seletFromCurrency = (value) => {
+  const seletFromCurrency = (value : string) => {
     setCurrencyDataFrom(value)
   }
 
-  const seletToCurrency = (value) => {
+  const seletToCurrency = (value : string) => {
     setCurrencyDataTo(value)
   }
 
   const callApis = () => {
 
-    const query = {
+    const query : any = {
       Amount: amount,
       From: currencyDataFrom,
       To: currencyDataTo
@@ -109,7 +109,7 @@ useEffect(() => {
               <div className="grid w-full items-center gap-4">
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="amount">Enter Amount</Label>
-                  <Input type="number" min={1} id="amount" value={amount} onChange={(e)=>setAmout(e.target.value)} placeholder="Enter Amount" />
+                  <Input type="number" min={1} id="amount" value={amount} onChange={(e)=>setAmout(parseFloat(e.target.value))} placeholder="Enter Amount" />
                 </div>
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="framework">From</Label>

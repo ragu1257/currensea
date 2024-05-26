@@ -26,7 +26,7 @@ interface CurrencyData {
 
 export default function PriceGraph() {
   const searchParams = useSearchParams();
-  const Amount = searchParams.get("Amount");
+  const Amount = parseFloat(searchParams.get("Amount") || "0");
   const From = searchParams.get("From");
   const To = searchParams.get("To");
   const [convertedValue, setConvertedValue] = useState<number>(0);
@@ -56,63 +56,41 @@ export default function PriceGraph() {
           `https://data-api.ecb.europa.eu/service/data/EXR/M.${To}.EUR.SP00.A?startPeriod=${formattedDate}&detail=full&format=jsondata`
         );
         const data = await getDataFromDB.json();
-        const currencyData = Object.values(data.dataSets[0].series)[0]
-          .observations;
+        const currencyData = data.dataSets[0].series["0:0:0:0:0"].observations["0"][0]
 
-        const currencyDataArray = Object.entries(currencyData).map(
-          ([key, value]) => {
-            return value[0];
-          }
-        );
+     
 
         setConvertedValue(
-          (currencyDataArray[0] * parseFloat(Amount)).toFixed(4)
+          parseFloat((currencyData * parseFloat(Amount.toString())).toFixed(4))
         );
       } else if (To === "EUR") {
         const getDataFromDB = await fetch(
           `https://data-api.ecb.europa.eu/service/data/EXR/M.${From}.EUR.SP00.A?startPeriod=${formattedDate}&detail=full&format=jsondata`
         );
         const data = await getDataFromDB.json();
-        const currencyData = Object.values(data.dataSets[0].series)[0]
-          .observations;
+        const currencyData = data.dataSets[0].series["0:0:0:0:0"].observations["0"][0]
 
-        const currencyDataArray = Object.entries(currencyData).map(
-          ([key, value]) => {
-            return value[0];
-          }
-        );
-        setConvertedValue(Amount / currencyDataArray[0]);
+
+ 
+        setConvertedValue(Amount / currencyData);
       } else {
         const getDataFromDB = await fetch(
           `https://data-api.ecb.europa.eu/service/data/EXR/M.${From}.EUR.SP00.A?startPeriod=${formattedDate}&detail=full&format=jsondata`
         );
         const dataFrom = await getDataFromDB.json();
-        const currencyDataFrom = Object.values(dataFrom.dataSets[0].series)[0]
-          .observations;
+        const currencyDataFrom = dataFrom.dataSets[0].series["0:0:0:0:0"].observations["0"][0];
 
-        const currencyDataArrayFrom = Object.entries(currencyDataFrom).map(
-          ([key, value]) => {
-            return value[0];
-          }
-        );
+
 
         const getDataToDB = await fetch(
           `https://data-api.ecb.europa.eu/service/data/EXR/M.${To}.EUR.SP00.A?startPeriod=${formattedDate}&detail=full&format=jsondata`
         );
         const dataTo = await getDataToDB.json();
-        const currencyDataTo = Object.values(dataTo.dataSets[0].series)[0]
-          .observations;
-        const currencyDataArrayTo = Object.entries(currencyDataTo).map(
-          ([key, value]) => {
-            return value[0];
-          }
-        );
+        const currencyDataTo = dataTo.dataSets[0].series["0:0:0:0:0"].observations["0"][0];
 
-        const dividedArray = currencyDataArrayTo.map((toValue, index) => {
-          const fromValue = currencyDataArrayFrom[index];
-          return toValue / fromValue;
-        });
-        setConvertedValue(dividedArray[0] * Amount);
+        const dividedArray = currencyDataTo/currencyDataFrom 
+
+        setConvertedValue(dividedArray * Amount);
       }
     };
 
@@ -128,14 +106,15 @@ export default function PriceGraph() {
     );
   }, [Amount, From, To, convertedValue]);
 
-  const formatCurrency = (value: number | string | null) => {
+  const formatCurrency = (value: number | string | null ) => {
+    const numericValue = value ? parseFloat(value.toString()) : 0;
     return new Intl.NumberFormat("en", {
       minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(value);
+      maximumFractionDigits: 2
+    }).format(numericValue);
   };
 
-  if (!Amount || !From || !To || parseFloat(Amount) < 1 || !currencies.find(currency => currency.value === From) || !currencies.find(currency => currency.value === To)){
+  if (!Amount || !From || !To || parseFloat(Amount.toString()) < 1 || !currencies.find(currency => currency.value === From) || !currencies.find(currency => currency.value === To)){
     return null
  }
   return (
